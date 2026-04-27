@@ -1,0 +1,23 @@
+{
+  "PCA Track 2 - PCA": {
+    "project_id": 27846,
+    "account_id": 28138,
+    "lead_id": 4980,
+    "child_opp_name": "PCA Track 2",
+    "company_id": 3,
+    "employee_id": 629,
+    "story_search_mode": "direct_under_project",
+    "task_search_mode": "under_story"
+  },
+  "SSC-Meetings and Non-Dev Efforts": {
+    "project_id": 27848,
+    "account_id": 28140,
+    "lead_id": 4980,
+    "child_opp_name": "SSC-Meetings and Non-Dev Efforts",
+    "company_id": 3,
+    "employee_id": 629,
+    "story_search_mode": "id_in_list_only",
+    "story_ids": [156653, 156652, 156651, 156650, 156649, 156648, 156647],
+    "task_search_mode": "none"
+  }
+}

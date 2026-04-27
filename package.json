@@ -1,0 +1,21 @@
+{
+  "name": "oddo-hour-filling",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node mcp-server.js",
+    "fill": "node bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "axios": "^1.15.2",
+    "cheerio": "^1.2.0",
+    "dotenv": "^17.4.2",
+    "zod": "^4.3.6"
+  }
+}
