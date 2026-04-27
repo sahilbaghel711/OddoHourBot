@@ -98,17 +98,17 @@ Add an entry for every project you log hours against:
 }
 ```
 
-| Field | Description |
-|-------|-------------|
-| `project_id` | Odoo internal project ID |
-| `account_id` | Odoo analytic account ID |
-| `lead_id` | Odoo CRM lead / opportunity ID |
-| `child_opp_name` | Name of the child opportunity in Odoo |
-| `company_id` | Odoo company ID |
-| `employee_id` | Your Odoo employee ID |
-| `story_search_mode` | `direct_under_project` or `id_in_list_only` |
-| `story_ids` | Required when mode is `id_in_list_only` — list of Odoo task IDs |
-| `task_search_mode` | `under_story` or `none` |
+| Field               | Description                                                     |
+| ------------------- | --------------------------------------------------------------- |
+| `project_id`        | Odoo internal project ID                                        |
+| `account_id`        | Odoo analytic account ID                                        |
+| `lead_id`           | Odoo CRM lead / opportunity ID                                  |
+| `child_opp_name`    | Name of the child opportunity in Odoo                           |
+| `company_id`        | Odoo company ID                                                 |
+| `employee_id`       | Your Odoo employee ID                                           |
+| `story_search_mode` | `direct_under_project` or `id_in_list_only`                     |
+| `story_ids`         | Required when mode is `id_in_list_only` — list of Odoo task IDs |
+| `task_search_mode`  | `under_story` or `none`                                         |
 
 ### 4. Configure the MCP servers in VS Code
 
@@ -129,35 +129,43 @@ Create `.vscode/mcp.json` (this file is in `.gitignore` — do not commit it):
         "-y",
         "@azure-devops/mcp",
         "<your-ado-org>",
-        "--authentication", "pat",
-        "-d", "core", "work", "work-items"
+        "--authentication",
+        "pat",
+        "-d",
+        "core",
+        "work",
+        "work-items"
       ],
       "env": {
-        "PERSONAL_ACCESS_TOKEN": "${env:ADO_PAT}"
+        "PERSONAL_ACCESS_TOKEN": "<base64-token>"
       }
     }
   }
 }
 ```
 
-> `${env:ADO_PAT}` reads the value from your system environment variable `ADO_PAT`.  
-> Set it in your shell profile (`$PROFILE` on PowerShell, `~/.bashrc` on bash) so VS Code inherits it:
->
-> ```powershell
-> # PowerShell profile ($PROFILE)
-> $env:ADO_PAT = "your_ado_pat_here"
-> ```
+The ADO MCP server expects `PERSONAL_ACCESS_TOKEN` to be a **Base64-encoded** string of `email:pat`.  
+Generate it with PowerShell:
+
+```powershell
+[Convert]::ToBase64String(
+  [System.Text.Encoding]::UTF8.GetBytes("you@yourcompany.com:your_ado_pat_here")
+)
+```
+
+Paste the output as the value of `PERSONAL_ACCESS_TOKEN` directly in `.vscode/mcp.json`.  
+This file is in `.gitignore` so it is safe to store the token there — **never commit it**.
 
 ---
 
 ## MCP Tools (exposed to the AI agent)
 
-| Tool | Description |
-|------|-------------|
-| `fill_hours` | Log an array of timesheet entries directly to Odoo (idempotent — creates or updates) |
+| Tool                   | Description                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------- |
+| `fill_hours`           | Log an array of timesheet entries directly to Odoo (idempotent — creates or updates)  |
 | `fill_hours_from_file` | Same as above but reads entries from a JSON file on disk (defaults to `entries.json`) |
-| `get_logged_hours` | Return all timesheet lines already logged in Odoo for a date range, grouped by date |
-| `check_holidays` | Fetch public holidays from Odoo for a date range |
+| `get_logged_hours`     | Return all timesheet lines already logged in Odoo for a date range, grouped by date   |
+| `check_holidays`       | Fetch public holidays from Odoo for a date range                                      |
 
 ### `fill_hours` — entry shape
 
